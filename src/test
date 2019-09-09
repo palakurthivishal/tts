@@ -1,0 +1,21 @@
+
+const {headers, records, showNewRecordTpl, newRecordTpl } = props;
+
+
+<Table>
+        <thead />
+        <tbody>
+          {/* // show data */}
+          {records.map((d, i) => (
+            <RenderRow
+              key={i}
+              row={d}
+              onSelect={onRowSelection}
+              rowSelected={selectedRows.includes(d.id)}
+            />
+          ))}
+          {/* // empty record */}
+          {showFormRecord && 
+           newRecordTpl}
+        </tbody>
+      </Table>
