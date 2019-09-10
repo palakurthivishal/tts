@@ -6,10 +6,12 @@
   "main": "src/index.js",
   "dependencies": {
     "bootstrap": "latest",
+    "formik": "1.5.8",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-scripts": "3.0.1",
-    "reactstrap": "latest"
+    "reactstrap": "latest",
+    "styled-components": "4.3.2"
   },
   "devDependencies": {
     "typescript": "3.3.3"
