@@ -31,7 +31,7 @@ export default ({ headers, multiSelect, onSelectAll, onColumnSort }) => {
   return (
     <thead>
       <tr>
-        <th style={{ ...tableHeaderStyle, textAlign: "center" }}>
+        <th style={{ ...tableHeaderStyle, paddingLeft: "12px" }}>
           {multiSelect ? (
             <input
               onChange={onSelectionChange}

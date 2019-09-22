@@ -63,15 +63,13 @@ export default ({
   const onTableScroll = e => {
     const { scrollHeight, scrollTop, offsetHeight } = e.currentTarget;
     // need to throttle this trigger
-    console.log(scrollHeight, scrollTop + offsetHeight);
+    console.log(lastScrollHt.current , scrollHeight, scrollTop + offsetHeight);
     if (
-      scrollHeight <= scrollTop + offsetHeight &&
-      lastScrollHt.current !== scrollTop + offsetHeight
+      scrollHeight <= scrollTop + offsetHeight
     ) {
       console.log("end");
       setShowUpdatingText(true);
       onVscrollEnd();
-      lastScrollHt.current = scrollTop + offsetHeight;
     }
   };
 
@@ -100,11 +98,10 @@ export default ({
         </tbody>
       </Table>
 
-      {showUpadatingText && (
-        <div style={{ marginTop: "100px", textAlign: "center" }}>
-          Updating records...
+      <div style={{ marginTop: "100px",minHeight:'8px', textAlign: "center" }}>
+          {showUpadatingText ? 'Updating records...' : ''}
         </div>
-      )}
+      
     </ScrollableTable>
   );
 };

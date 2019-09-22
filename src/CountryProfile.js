@@ -77,7 +77,7 @@ export default props => {
   const deleteSelectedRecords = () => {
     // call /delete api
     // on success, do
-    console.log(selectedRows);
+    
     setRecords(getRecordsFromServer());
     setSelectedRows([]);
     setShowNewRecord(false);
@@ -122,6 +122,7 @@ export default props => {
         nationalType: "nationalType2"
       }
     ];
+    console.log('requested new records');
     setTimeout(() => {
       setRecords(recs);
     }, 3000);

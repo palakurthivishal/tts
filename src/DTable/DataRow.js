@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 export default ({ row, onSelect, selectionMode }) => {
   const selectedStyles = { background: "#F00" };
 
-  console.log(row);
+  
   return (
     <tr style={{ background: row.isSelected ? "#F00" : "" }}>
       {selectionMode && (
@@ -18,7 +18,7 @@ export default ({ row, onSelect, selectionMode }) => {
         </td>
       )}
       {Object.entries(row).map((cell, i) => {
-        console.log(row);
+        
         return <td key={i}>{cell[1]}</td>;
       })}
       <td>

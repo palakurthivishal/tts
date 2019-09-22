@@ -88,7 +88,7 @@ export default () => {
   const handleChange = event => {
     // place where we listen to all the search criteria form values
     // maintain a state variable to build the form data status
-    console.log(event.target.name, event.target.value);
+    // console.log(event.target.name, event.target.value);
   };
 
   return (
