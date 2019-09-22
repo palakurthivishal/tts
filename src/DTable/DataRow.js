@@ -18,7 +18,8 @@ export default ({ row, onSelect, selectionMode }) => {
         </td>
       )}
       {Object.entries(row).map((cell, i) => {
-        return <td key={i}>{cell}</td>;
+        console.log(row);
+        return <td key={i}>{cell[1]}</td>;
       })}
       <td>
         <button>Delete</button>

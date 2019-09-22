@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Table } from "reactstrap";
 import styled from "styled-components";
 import HeaderRow from "./HeaderRow";
@@ -7,7 +7,9 @@ import DataRow from "./DataRow";
 const ScrollableTable = styled.div`
   max-height: 300px;
   overflow: auto;
-  border: 1px solid #ccc;
+  /* // remove if not required */
+  border: 1px solid #f00;
+  margin: 8px 0;
 `;
 
 export default ({
@@ -16,12 +18,16 @@ export default ({
   showNewRecord,
   newRecord,
   onRowSelectionChange,
-  multiSelect
+  multiSelect,
+  onVscrollEnd
 }) => {
   const [selectedRows, setSelectedRows] = useState([]);
+  const [showUpadatingText, setShowUpdatingText] = useState(false);
+  const lastScrollHt = useRef(0);
   // clear selection
   useEffect(() => {
     setSelectedRows([]);
+    setShowUpdatingText(false);
   }, [records, showNewRecord]);
 
   // update parent about change of selection
@@ -55,12 +61,23 @@ export default ({
   };
 
   const onTableScroll = e => {
-    debugger;
+    const { scrollHeight, scrollTop, offsetHeight } = e.currentTarget;
+    // need to throttle this trigger
+    console.log(scrollHeight, scrollTop + offsetHeight);
+    if (
+      scrollHeight <= scrollTop + offsetHeight &&
+      lastScrollHt.current !== scrollTop + offsetHeight
+    ) {
+      console.log("end");
+      setShowUpdatingText(true);
+      onVscrollEnd();
+      lastScrollHt.current = scrollTop + offsetHeight;
+    }
   };
 
   return (
     <ScrollableTable onWheel={onTableScroll}>
-      <Table>
+      <Table responsive>
         <HeaderRow
           headers={headers}
           multiSelect={multiSelect}
@@ -82,6 +99,12 @@ export default ({
           {showNewRecord && newRecord}
         </tbody>
       </Table>
+
+      {showUpadatingText && (
+        <div style={{ marginTop: "100px", textAlign: "center" }}>
+          Updating records...
+        </div>
+      )}
     </ScrollableTable>
   );
 };

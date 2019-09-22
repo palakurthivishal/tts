@@ -99,36 +99,33 @@ export default props => {
         country: "country2",
         nationalCode: "nationalCode2",
         nationalType: "nationalType2"
-      },
+      }
+    ];
+  };
+
+  const getNewRecordsFromServer = () => {
+    const len = records.length;
+    const recs = [
+      ...records,
       {
-        id: 11,
+        id: 1 + len,
         countryCode: "countryCode1",
         country: "country1",
         nationalCode: "nationalCode1",
         nationalType: "nationalType1"
       },
       {
-        id: 22,
-        countryCode: "countryCode2",
-        country: "country2",
-        nationalCode: "nationalCode2",
-        nationalType: "nationalType2"
-      },
-      {
-        id: 111,
-        countryCode: "countryCode1",
-        country: "country1",
-        nationalCode: "nationalCode1",
-        nationalType: "nationalType1"
-      },
-      {
-        id: 222,
+        id: 2 + len,
         countryCode: "countryCode2",
         country: "country2",
         nationalCode: "nationalCode2",
         nationalType: "nationalType2"
       }
     ];
+    setTimeout(() => {
+      setRecords(recs);
+    }, 3000);
+    // setRecords(recs);
   };
 
   return (
@@ -178,6 +175,7 @@ export default props => {
           setSelectedRows(selRows);
         }}
         multiSelect={true}
+        onVscrollEnd={getNewRecordsFromServer}
         showNewRecord={showNewRecord}
         newRecord={
           <NewRecord
