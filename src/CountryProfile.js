@@ -99,6 +99,34 @@ export default props => {
         country: "country2",
         nationalCode: "nationalCode2",
         nationalType: "nationalType2"
+      },
+      {
+        id: 11,
+        countryCode: "countryCode1",
+        country: "country1",
+        nationalCode: "nationalCode1",
+        nationalType: "nationalType1"
+      },
+      {
+        id: 22,
+        countryCode: "countryCode2",
+        country: "country2",
+        nationalCode: "nationalCode2",
+        nationalType: "nationalType2"
+      },
+      {
+        id: 111,
+        countryCode: "countryCode1",
+        country: "country1",
+        nationalCode: "nationalCode1",
+        nationalType: "nationalType1"
+      },
+      {
+        id: 222,
+        countryCode: "countryCode2",
+        country: "country2",
+        nationalCode: "nationalCode2",
+        nationalType: "nationalType2"
       }
     ];
   };
@@ -119,10 +147,37 @@ export default props => {
       </button>
       <DTable
         records={records}
-        headers={[]}
+        headers={[
+          {
+            name: "id",
+            label: "ID",
+            sortable: false
+          },
+          {
+            name: "countryCode",
+            label: "Country Code",
+            sortable: true
+          },
+          {
+            name: "country",
+            label: "Country",
+            sortable: true
+          },
+          {
+            name: "nationalCode",
+            label: "National Code",
+            sortable: false
+          },
+          {
+            name: "nationalType",
+            label: "National Type",
+            sortable: false
+          }
+        ]}
         onRowSelectionChange={selRows => {
           setSelectedRows(selRows);
         }}
+        multiSelect={true}
         showNewRecord={showNewRecord}
         newRecord={
           <NewRecord
@@ -133,6 +188,8 @@ export default props => {
           />
         }
       />
+
+      <pre>Selected Rows:{JSON.stringify(selectedRows, 0, 2)}</pre>
     </>
   );
 };

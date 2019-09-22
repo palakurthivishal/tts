@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "reactstrap";
-
+import styled from "styled-components";
+import HeaderRow from "./HeaderRow";
 import DataRow from "./DataRow";
 
+const ScrollableTable = styled.div`
+  max-height: 300px;
+  overflow: auto;
+  border: 1px solid #ccc;
+`;
+
 export default ({
-  headers,
+  headers = [],
   records,
   showNewRecord,
   newRecord,
-  onRowSelectionChange
+  onRowSelectionChange,
+  multiSelect
 }) => {
   const [selectedRows, setSelectedRows] = useState([]);
   // clear selection
@@ -22,34 +30,58 @@ export default ({
   }, [selectedRows]);
 
   const onRowSelection = ({ id, isSelected }) => {
-    if (isSelected) {
-      setSelectedRows([...selectedRows, id]);
-    } else {
-      setSelectedRows(
-        selectedRows.splice(
-          selectedRows.findIndex(existingId => existingId === id),
+    if (multiSelect) {
+      if (isSelected) {
+        setSelectedRows([...selectedRows, id]);
+      } else {
+        let updatedSelection = [...selectedRows];
+        updatedSelection.splice(
+          updatedSelection.findIndex(existingId => existingId === id),
           1
-        )
-      );
+        );
+        setSelectedRows(updatedSelection);
+      }
+    } else {
+      if (isSelected) setSelectedRows([id]);
     }
   };
+
+  const onAllRowSelection = isChecked => {
+    if (isChecked) {
+      setSelectedRows(records.map(d => d.id));
+    } else {
+      setSelectedRows([]);
+    }
+  };
+
+  const onTableScroll = e => {
+    debugger;
+  };
+
   return (
-    <Table>
-      <thead />
-      <tbody>
-        {/* // show data */}
-        {records &&
-          records.map((d, i) => (
-            <DataRow
-              key={i}
-              row={d}
-              onSelect={onRowSelection}
-              rowSelected={selectedRows.includes(d.id)}
-            />
-          ))}
-        {/* // empty record */}
-        {showNewRecord && newRecord}
-      </tbody>
-    </Table>
+    <ScrollableTable onWheel={onTableScroll}>
+      <Table>
+        <HeaderRow
+          headers={headers}
+          multiSelect={multiSelect}
+          onSelectAll={onAllRowSelection}
+        />
+        <tbody>
+          {/* // show data */}
+          {records &&
+            records.map((d, i) => (
+              <DataRow
+                selectionMode={multiSelect ? "checkbox" : "radio"}
+                key={i}
+                row={{ ...d, isSelected: selectedRows.includes(d.id) }}
+                onSelect={onRowSelection}
+                multiSelect
+              />
+            ))}
+          {/* // empty record */}
+          {showNewRecord && newRecord}
+        </tbody>
+      </Table>
+    </ScrollableTable>
   );
 };

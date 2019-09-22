@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
 
-export default ({ row, onSelect, rowSelected }) => {
-  const [isSelected, setIsSelected] = useState(false);
+export default ({ row, onSelect, selectionMode }) => {
   const selectedStyles = { background: "#F00" };
 
-  useEffect(() => {
-    setIsSelected(rowSelected);
-  }, [rowSelected]);
-
-  useEffect(() => {
-    onSelect({ isSelected, id: row.id });
-  }, [isSelected]);
-
+  console.log(row);
   return (
-    <tr
-      style={{ background: isSelected ? "#F00" : "" }}
-      onClick={() => setIsSelected(!isSelected)}
-    >
+    <tr style={{ background: row.isSelected ? "#F00" : "" }}>
+      {selectionMode && (
+        <td>
+          <input
+            type={selectionMode}
+            onChange={e => {
+              onSelect({ isSelected: e.target.checked, id: row.id });
+            }}
+            checked={row.isSelected}
+          />
+        </td>
+      )}
       {Object.entries(row).map((cell, i) => {
         return <td key={i}>{cell}</td>;
       })}
